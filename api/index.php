@@ -1,23 +1,44 @@
 <?php
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Origin: *");
-session_start();
-if(isset($_SESSION["data"]) && !empty($_SESSION["data"])){ echo $_SESSION["data"];exit();}
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://www.btpn.com/en/prime-lending-rate/kurs');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-$page = preg_replace('/\r|\n/','',curl_exec($ch));
-curl_close($ch);
-preg_match_all('/<td>(.*?) \/ (.*?)<\/td>                                        <td>(.*?)<\/td>	                       				<td>(.*?)<\/td>/',$page,$data);
-foreach($data[1] as $k => $v){
-	if($data[2][$k] != 'IDR'){ continue; }
-	$rate[] = array(
-		'currency' => $data[1][$k],
-		'buy' => ceil(preg_replace('/,/','',$data[3][$k])),
-		'sell' => ceil(preg_replace('/,/','',$data[4][$k]))+500,
-	);
+preg_match_all('/<p class="h4 mt-0">(.*?) <small/', file_get_contents('https://www.random-name-generator.com/indonesia?country=id_ID&gender=&n=20'), $data);
+// print_r($data);exit();
+foreach ($data[1] as $name) {
+	$result[] = naming($name);
 }
-$result = json_encode($rate);
-$_SESSION["data"] = $result;
-echo $result;
-?>
+header('Content-Type: application/json');
+echo "recent(".json_encode($result).")";
+
+
+
+function to_time_ago( $time ) { 
+    $diff = time()-(time() - $time); 
+    if( $diff < 1 ) {  
+        return 'baru saja';  
+    }
+    $time_rules = array (
+		60 * 60 	=> 'jam', 
+		60	=> 'menit', 
+		1	=> 'detik'
+    ); 
+    foreach( $time_rules as $secs => $str ) { 
+        $div = $diff / $secs; 
+        if( $div >= 1 ) {
+            $t = round( $div );
+            return $t . ' ' . $str .  
+                ( $t > 1 ? 's' : '' ) . ' yang lalu'; 
+        } 
+    } 
+} 
+
+function naming($name){
+	if(strlen($name) <= 20){
+		$p = $name;
+	}else{
+		$p = substr($name,0,17).'...';
+	}
+	$p .= "<br>Transaksi Rekber senilai<br><b>Rp ".nominal()."</b><small> ".to_time_ago(rand(1,86400))."</small>";
+	return $p;
+}
+
+function nominal(){
+	return number_format((int) (1000 * ceil(rand(10000,1000000) / 1000)));
+}
