@@ -10,7 +10,7 @@ foreach ($data[1] as $name) {
 }
 header('Content-Type: application/javascript');
 //echo "recent(".json_encode($result).");";
-echo "var recentSales = ".json_encode($result).";";
+echo "var recentSales = [".json_encode($result)."];";
 
 
 
