@@ -28,8 +28,7 @@ function to_time_ago( $time ) {
         $div = $diff / $secs; 
         if( $div >= 1 ) {
             $t = round( $div );
-            return $t . ' ' . $str .  
-                ( $t > 1 ? 's' : '' ) . ' yang lalu'; 
+            return $t . ' ' . $str ' yang lalu'; 
         } 
     } 
 } 
