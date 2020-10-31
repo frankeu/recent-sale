@@ -10,8 +10,7 @@ foreach ($data[1] as $name) {
 }
 header('Content-Type: application/javascript');
 //echo "recent(".json_encode($result).");";
-echo 'var recentSales = '.json_encode($result).';setInterval(function() {var buyer = recentSales[Math.random() * recentSales.length | 0];document.getElementById("random").innerHTML = buyer;$(".custom-social-proof").slideToggle("fast");}, 6000);$(".custom-close").click(function(){$(".custom-social-proof").stop().slideToggle("fast");});';
-
+echo 'var recentSales = '.json_encode($result).';';
 
 
 function to_time_ago( $time ) { 
