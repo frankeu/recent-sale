@@ -1,4 +1,8 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST');
+header("Access-Control-Allow-Headers: X-Requested-With");
+
 preg_match_all('/<p class="h4 mt-0">(.*?) <small/', file_get_contents('https://www.random-name-generator.com/indonesia?country=id_ID&gender=&n=20'), $data);
 // print_r($data);exit();
 foreach ($data[1] as $name) {
