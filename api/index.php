@@ -8,9 +8,9 @@ preg_match_all('/<p class="h4 mt-0">(.*?) <small/', file_get_contents('https://w
 foreach ($data[1] as $name) {
 	$result[] = naming($name);
 }
-header('Content-Type: application/json');
+header('Content-Type: application/javascript');
 //echo "recent(".json_encode($result).");";
-echo json_encode($result);
+echo "var recentSales = ".json_encode($result).";";
 
 
 
