@@ -9,7 +9,7 @@ foreach ($data[1] as $name) {
 	$result[] = naming($name);
 }
 header('Content-Type: application/json');
-echo "recent(".json_encode($result).")";
+echo "recent(".json_encode($result).");";
 
 
 
